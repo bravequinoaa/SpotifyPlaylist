@@ -36,8 +36,6 @@ class spotifyapp:
 
     def getSongFeatures(self, uri, feature=None):
         # can pass entire songarr
-        # TODO:
-        # set up someone only the desired feature is returned
         result = self.spotify.audio_features(uri)[0]
 
         if feature == None:
@@ -48,9 +46,6 @@ class spotifyapp:
             return "Feature not found"
         return f'{feature}: {featureVal}'
 
-        
-        
-
     def getSongAnalysis(self, uri):
         # this is probably too deep than what I actually ened
         # might be useful if i do the genre ML problem
@@ -58,17 +53,41 @@ class spotifyapp:
         return result
 
     def getSongArtistName(self, uri):
+        # Can pass 50 at a time wihth spotify.tracks()h
         result = self.spotify.track(uri)
         songname = result['name']
         artistname = (result['artists'])[0]['name']
         return songname, artistname
     
-    def getFeatureList(self):
-        uri = 'spotify:track:5PJKbLCiIkQgir60Sd8DQ5'
-        result = self.spotify.audio_features(uri)[0]
+    def getFeatureList(self, uris, feature = None):
+        # can pass 100 uris
+        # we trust feature is valid 
         features = []
-        for key in result:
-            features.append(key)
+        for uri in uris:
+            if feature:
+                result = (self.spotify.audio_features(uri)[0])[feature]
+            else:
+                result = self.spotify.audio_features(uri)[0]
+
+            features.append(result)
 
         return features 
+    
+    def getSongDetails(self, uris):
+        # [ [songname, artist], ]
+        songdetails = []
+        result = self.spotify.tracks(uris)['tracks']
+        for i in range(len(uris)):
+            songname = (result[i])['name']     
+            artistname = (((result[i])['artists'])[0])['name']
+            songdetails.append( (songname, artistname) )
+        return songdetails
+
+    
+
+
+
+
+
+
 
