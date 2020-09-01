@@ -6,11 +6,7 @@ from spotipy.oauth2 import SpotifyOAuth
 class spotifyapp:
     def __init__(self):
         self.scope = 'playlist-modify-private'
-        self.client_id = '77fde354c3c94b0d842c2f5d387b1c7d'
-        self.client_secret = 'cef8ee0d11154423913dbe3f1020ba1b'
-        self.spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=self.client_id,
-                                                                 client_secret=self.client_secret,
-                                                                 scope=self.scope, 
+        self.spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=self.scope, 
                                                                  cache_path='./'))
 
     def getSongURIs(self, playlist, outputFile):

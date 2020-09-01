@@ -5,6 +5,8 @@ songsFile = "./songs.txt"
 
 polkahoeURI='spotify:playlist:5jkjtIloJ4xPa4SlN2Jrp6'
 quinoaURI='https://open.spotify.com/playlist/1b0IfaycrnSBdKbDvB1jmq?si=aSEeVFLkQSq8H8xjEcfYVA'
+newPlaylistURI='spotify:playlist:3U6Ia6WrwYPP9gUv8Mypz3'
+
 user='spotify:user:wilmondvano'
 
 
@@ -90,8 +92,12 @@ if __name__=="__main__":
     songsarrName = getSongNamesList(songarrURI)
     featuresarr = makeFeatureArr(songarrURI, 'danceability')
     print("average: ", average(featuresarr))
-    filteredNames, filteredUris = filterArr(featuresarr, songsarrName, songarrURI)
+    filteredNames, filteredURIs = filterArr(featuresarr, songsarrName, songarrURI)
     print(filteredNames)
-    print(filteredUris)
+    print(filteredURIs)
     print("totalsongs: ", len(filteredNames))
-
+    try:
+        s.fillPlaylist(filteredURIs, newPlaylistURI) 
+    except Exception:
+        print("Unable to fill")
+    print("success!")
