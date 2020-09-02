@@ -11,6 +11,7 @@ class spotifyapp:
         self.spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=self.client_id,
                                                                  client_secret=self.client_secret,
                                                                  scope=self.scope, 
+																 redirect_uri='localhost:8888/callback',
                                                                  cache_path='./'))
 
     def getSongURIs(self, playlist, outputFile):
