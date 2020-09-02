@@ -1,6 +1,6 @@
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyOAuth 
+import spotipy.util as util
 
 
 class spotifyapp:
@@ -8,10 +8,19 @@ class spotifyapp:
         self.scope = 'playlist-modify-private'
         self.client_id = '77fde354c3c94b0d842c2f5d387b1c7d'
         self.client_secret = 'cef8ee0d11154423913dbe3f1020ba1b'
-        self.spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=self.client_id,
-                                                                 client_secret=self.client_secret,
-                                                                 scope=self.scope, 
-                                                                 cache_path='./'))
+        self.redirect_uri = 'localhost:8888/callback'
+        self.cache_path = './'
+        self.username = 'wilmondvano'
+        self.auth = util.prompt_for_user_token(username=self.username,
+                                                scope=self.scope,
+                                                client_id=self.client_id,
+                                                client_secret=self.client_secret,
+                                                redirect_uri=self.redirect_uri)
+        if self.token:
+            print("YES")
+        else:
+            print("FUCK")
+        self.spotify = spotipy.Spotify(auth=self.auth)
 
     def getSongURIs(self, playlist, outputFile):
         totalSongs = 0 
